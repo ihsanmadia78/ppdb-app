@@ -987,29 +987,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(mapDashboard);
 
 // Get pendaftar data with coordinates from backend
-const pendaftarMapData = @json(
-    \App\Models\Pendaftar::with(['dataSiswa', 'jurusan'])
-        ->whereHas('dataSiswa', function($query) {
-            $query->whereNotNull('lat')
-                  ->whereNotNull('lng')
-                  ->where('lat', '!=', '')
-                  ->where('lng', '!=', '')
-                  ->where('lat', '!=', 0)
-                  ->where('lng', '!=', 0);
-        })
-        ->get()
-        ->map(function($p) {
-            return [
-                'lat' => floatval($p->dataSiswa->lat ?? 0),
-                'lng' => floatval($p->dataSiswa->lng ?? 0),
-                'nama' => $p->dataSiswa->nama ?? '-',
-                'jurusan' => $p->jurusan->nama ?? '-',
-                'status' => $p->status ?? 'SUBMIT',
-                'kecamatan' => $p->dataSiswa->kecamatan ?? 'Tidak diketahui',
-                'alamat' => $p->dataSiswa->alamat ?? '-'
-            ];
-        })
-);
+const pendaftarMapData = [];
 
 const markers = L.markerClusterGroup({
     maxClusterRadius: 50,
@@ -1053,24 +1031,60 @@ pendaftarMapData.forEach(function(p) {
 
 mapDashboard.addLayer(markers);
 
-// Update statistics
-document.getElementById('totalLokasi').textContent = pendaftarMapData.length;
-
-const topKecamatan = Object.entries(kecamatanCount)
-    .sort((a, b) => b[1] - a[1])[0];
-if (topKecamatan) {
-    document.getElementById('kecamatanTop').textContent = `${topKecamatan[0]} (${topKecamatan[1]})`;
-}
-
-document.getElementById('radiusTerjauh').textContent = maxDistance > 0 ? `${maxDistance.toFixed(1)} km` : '-';
-document.getElementById('clusterTerbesar').textContent = Object.keys(kecamatanCount).length > 0 ? `${Math.max(...Object.values(kecamatanCount))} siswa` : '-';
-
-// Fit bounds
-if (pendaftarMapData.length > 0) {
-    const bounds = markers.getBounds();
-    if (bounds.isValid()) {
-        mapDashboard.fitBounds(bounds.pad(0.1));
-    }
-}
+// Fetch data from API
+fetch('/api/pendaftar-map-data')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(function(p) {
+            if (p.lat && p.lng && !isNaN(p.lat) && !isNaN(p.lng) && p.lat != 0 && p.lng != 0) {
+                let statusBadge = 'primary';
+                switch(p.status) {
+                    case 'LULUS': statusBadge = 'success'; break;
+                    case 'TIDAK_LULUS': statusBadge = 'danger'; break;
+                    case 'CADANGAN': statusBadge = 'secondary'; break;
+                    default: statusBadge = 'primary';
+                }
+                
+                const marker = L.marker([parseFloat(p.lat), parseFloat(p.lng)])
+                    .bindPopup(`
+                        <div style="min-width: 200px;">
+                            <strong>${p.nama}</strong><br>
+                            <small>Jurusan: ${p.jurusan}</small><br>
+                            <small>Kecamatan: ${p.kecamatan}</small><br>
+                            <small>Status: <span class="badge bg-${statusBadge}">${p.status}</span></small>
+                        </div>
+                    `);
+                markers.addLayer(marker);
+                
+                kecamatanCount[p.kecamatan] = (kecamatanCount[p.kecamatan] || 0) + 1;
+                
+                const distance = mapDashboard.distance([p.lat, p.lng], centerPoint) / 1000;
+                if (distance > maxDistance) maxDistance = distance;
+            }
+        });
+        
+        mapDashboard.addLayer(markers);
+        
+        // Update statistics
+        document.getElementById('totalLokasi').textContent = data.length;
+        
+        const topKecamatan = Object.entries(kecamatanCount)
+            .sort((a, b) => b[1] - a[1])[0];
+        if (topKecamatan) {
+            document.getElementById('kecamatanTop').textContent = `${topKecamatan[0]} (${topKecamatan[1]})`;
+        }
+        
+        document.getElementById('radiusTerjauh').textContent = maxDistance > 0 ? `${maxDistance.toFixed(1)} km` : '-';
+        document.getElementById('clusterTerbesar').textContent = Object.keys(kecamatanCount).length > 0 ? `${Math.max(...Object.values(kecamatanCount))} siswa` : '-';
+        
+        // Fit bounds
+        if (data.length > 0) {
+            const bounds = markers.getBounds();
+            if (bounds.isValid()) {
+                mapDashboard.fitBounds(bounds.pad(0.1));
+            }
+        }
+    })
+    .catch(error => console.error('Error loading map data:', error));
 </script>
 @endsection
