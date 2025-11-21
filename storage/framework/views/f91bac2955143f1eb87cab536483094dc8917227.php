@@ -145,11 +145,25 @@
         </div>
 
     <div class="row mb-4">
-        <!-- Chart Total Pendaftar -->
+        <!-- Chart Tren Pendaftar Harian -->
         <div class="col-lg-4 col-md-12 mb-4">
             <div class="card shadow h-100">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-gray-800">📈 Total Pendaftar per Jurusan</h6>
+                    <h6 class="m-0 font-weight-bold text-gray-800">📈 Tren Pendaftar Harian</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area" style="height: 250px; position: relative;">
+                        <canvas id="chartTrenHarian"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Pendaftar Per Jurusan -->
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-gray-800">🎓 Pendaftar Per Jurusan</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area" style="height: 250px; position: relative;">
@@ -159,34 +173,57 @@
             </div>
         </div>
 
-        <!-- Chart Terverifikasi -->
+        <!-- Chart Status Pendaftaran -->
         <div class="col-lg-4 col-md-12 mb-4">
             <div class="card shadow h-100">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-gray-800">✅ Terverifikasi per Jurusan</h6>
+                    <h6 class="m-0 font-weight-bold text-gray-800">📊 Status Pendaftaran</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area" style="height: 250px; position: relative;">
-                        <canvas id="chartTerverifikasi"></canvas>
+                        <canvas id="chartStatus"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Chart Sudah Bayar -->
-        <div class="col-lg-4 col-md-12 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-gray-800">💰 Sudah Bayar per Jurusan</h6>
+    </div>
+
+    <!-- Peta Sebaran Domisili -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-gray-800">🗺️ Peta Sebaran Domisili Pendaftar</h6>
+                    <a href="<?php echo e(route('admin.peta')); ?>" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-expand me-1"></i>Lihat Fullscreen
+                    </a>
                 </div>
-                <div class="card-body">
-                    <div class="chart-area" style="height: 250px; position: relative;">
-                        <canvas id="chartSudahBayar"></canvas>
+                <div class="card-body p-0">
+                    <div id="mapDashboard" style="height: 400px;"></div>
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="row text-center">
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Total Lokasi</small>
+                            <strong id="totalLokasi">0</strong>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Kecamatan Terbanyak</small>
+                            <strong id="kecamatanTop">-</strong>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Radius Terjauh</small>
+                            <strong id="radiusTerjauh">-</strong>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Cluster Terbesar</small>
+                            <strong id="clusterTerbesar">-</strong>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- Menu Utama -->
@@ -774,22 +811,87 @@ document.addEventListener('DOMContentLoaded', function() {
     // Data untuk Chart.js
     const labels = <?php echo json_encode($labels, 15, 512) ?>;
     const data = <?php echo json_encode($data, 15, 512) ?>;
-    const terverifikasiData = <?php echo json_encode($terverifikasiData, 15, 512) ?>;
-    const sudahBayarData = <?php echo json_encode($sudahBayarData, 15, 512) ?>;
+    const statistikHarian = <?php echo json_encode($statistikHarian, 15, 512) ?>;
 
     const colors = [
         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
     ];
 
-    // Chart Total Pendaftar
+    // Chart 1: Tren Pendaftar Harian (7 hari terakhir)
+    new Chart(document.getElementById('chartTrenHarian'), {
+        type: 'line',
+        data: {
+            labels: statistikHarian.map(item => item.tanggal),
+            datasets: [{
+                label: 'Pendaftar',
+                data: statistikHarian.map(item => item.jumlah),
+                backgroundColor: 'rgba(108, 117, 125, 0.1)',
+                borderColor: '#6c757d',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#6c757d',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Pendaftar Per Jurusan
     new Chart(document.getElementById('chartJurusan'), {
-        type: 'doughnut',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Total Pendaftar',
+                label: 'Pendaftar',
                 data: data,
                 backgroundColor: colors,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+
+    // Chart 3: Status Pendaftaran
+    new Chart(document.getElementById('chartStatus'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Diterima', 'Menunggu', 'Ditolak', 'Cadangan'],
+            datasets: [{
+                data: [
+                    <?php echo e($diterima); ?>,
+                    <?php echo e($menunggu); ?>,
+                    <?php echo e($ditolak); ?>,
+                    <?php echo e($cadangan); ?>
+
+                ],
+                backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6c757d'],
                 borderWidth: 2,
                 borderColor: '#f8f9fa'
             }]
@@ -805,62 +907,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         padding: 10,
                         font: { size: 10 }
                     }
-                }
-            }
-        }
-    });
-
-    // Chart Terverifikasi
-    new Chart(document.getElementById('chartTerverifikasi'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Terverifikasi',
-                data: terverifikasiData,
-                backgroundColor: '#28a745',
-                borderColor: '#1e7e34',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1 }
-                }
-            }
-        }
-    });
-
-    // Chart Sudah Bayar
-    new Chart(document.getElementById('chartSudahBayar'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Sudah Bayar',
-                data: sudahBayarData,
-                backgroundColor: '#007bff',
-                borderColor: '#0056b3',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1 }
                 }
             }
         }
@@ -923,6 +969,92 @@ function showExportModal() {
     document.getElementById('exportModal').addEventListener('hidden.bs.modal', function() {
         this.remove();
     });
+}
+</script>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+<script>
+// Initialize map for dashboard
+const mapDashboard = L.map('mapDashboard').setView([-6.9175, 107.6191], 10);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(mapDashboard);
+
+// Get pendaftar data with coordinates from backend
+const pendaftarMapData = <?php echo json_encode(
+    \App\Models\Pendaftar::with(['dataSiswa', 'jurusan'])
+        ->whereHas('dataSiswa', function($query) {
+            $query->whereNotNull('lat')
+                  ->whereNotNull('lng')
+                  ->where('lat') ?>;
+
+const markers = L.markerClusterGroup({
+    maxClusterRadius: 50,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false
+});
+
+const kecamatanCount = {};
+let maxDistance = 0;
+const centerPoint = [-6.9175, 107.6191]; // SMK location
+
+pendaftarMapData.forEach(function(p) {
+    if (p.lat && p.lng && !isNaN(p.lat) && !isNaN(p.lng) && p.lat != 0 && p.lng != 0) {
+        let statusBadge = 'primary';
+        switch(p.status) {
+            case 'LULUS': statusBadge = 'success'; break;
+            case 'TIDAK_LULUS': statusBadge = 'danger'; break;
+            case 'CADANGAN': statusBadge = 'secondary'; break;
+            default: statusBadge = 'primary';
+        }
+        
+        const marker = L.marker([parseFloat(p.lat), parseFloat(p.lng)])
+            .bindPopup(`
+                <div style="min-width: 200px;">
+                    <strong>${p.nama}</strong><br>
+                    <small>Jurusan: ${p.jurusan}</small><br>
+                    <small>Kecamatan: ${p.kecamatan}</small><br>
+                    <small>Status: <span class="badge bg-${statusBadge}">${p.status}</span></small>
+                </div>
+            `);
+        markers.addLayer(marker);
+        
+        // Count kecamatan
+        kecamatanCount[p.kecamatan] = (kecamatanCount[p.kecamatan] || 0) + 1;
+        
+        // Calculate distance
+        const distance = mapDashboard.distance([p.lat, p.lng], centerPoint) / 1000;
+        if (distance > maxDistance) maxDistance = distance;
+    }
+});
+
+mapDashboard.addLayer(markers);
+
+// Update statistics
+document.getElementById('totalLokasi').textContent = pendaftarMapData.length;
+
+const topKecamatan = Object.entries(kecamatanCount)
+    .sort((a, b) => b[1] - a[1])[0];
+if (topKecamatan) {
+    document.getElementById('kecamatanTop').textContent = `${topKecamatan[0]} (${topKecamatan[1]})`;
+}
+
+document.getElementById('radiusTerjauh').textContent = maxDistance > 0 ? `${maxDistance.toFixed(1)} km` : '-';
+document.getElementById('clusterTerbesar').textContent = Object.keys(kecamatanCount).length > 0 ? `${Math.max(...Object.values(kecamatanCount))} siswa` : '-';
+
+// Fit bounds
+if (pendaftarMapData.length > 0) {
+    const bounds = markers.getBounds();
+    if (bounds.isValid()) {
+        mapDashboard.fitBounds(bounds.pad(0.1));
+    }
 }
 </script>
 <?php $__env->stopSection(); ?>

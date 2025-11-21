@@ -191,6 +191,43 @@
 
     </div>
 
+    <!-- Peta Sebaran Domisili -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-gray-800">🗺️ Peta Sebaran Domisili Pendaftar</h6>
+                    <a href="{{ route('admin.peta') }}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-expand me-1"></i>Lihat Fullscreen
+                    </a>
+                </div>
+                <div class="card-body p-0">
+                    <div id="mapDashboard" style="height: 400px;"></div>
+                </div>
+                <div class="card-footer bg-white">
+                    <div class="row text-center">
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Total Lokasi</small>
+                            <strong id="totalLokasi">0</strong>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Kecamatan Terbanyak</small>
+                            <strong id="kecamatanTop">-</strong>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Radius Terjauh</small>
+                            <strong id="radiusTerjauh">-</strong>
+                        </div>
+                        <div class="col-md-3 col-6 mb-2">
+                            <small class="text-muted d-block">Cluster Terbesar</small>
+                            <strong id="clusterTerbesar">-</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Menu Utama -->
     <div class="row mb-4">
         <div class="col-12">
@@ -931,6 +968,109 @@ function showExportModal() {
     document.getElementById('exportModal').addEventListener('hidden.bs.modal', function() {
         this.remove();
     });
+}
+</script>
+
+<!-- Leaflet CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+
+<script>
+// Initialize map for dashboard
+const mapDashboard = L.map('mapDashboard').setView([-6.9175, 107.6191], 10);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(mapDashboard);
+
+// Get pendaftar data with coordinates from backend
+const pendaftarMapData = @json(
+    \App\Models\Pendaftar::with(['dataSiswa', 'jurusan'])
+        ->whereHas('dataSiswa', function($query) {
+            $query->whereNotNull('lat')
+                  ->whereNotNull('lng')
+                  ->where('lat', '!=', '')
+                  ->where('lng', '!=', '')
+                  ->where('lat', '!=', 0)
+                  ->where('lng', '!=', 0);
+        })
+        ->get()
+        ->map(function($p) {
+            return [
+                'lat' => floatval($p->dataSiswa->lat ?? 0),
+                'lng' => floatval($p->dataSiswa->lng ?? 0),
+                'nama' => $p->dataSiswa->nama ?? '-',
+                'jurusan' => $p->jurusan->nama ?? '-',
+                'status' => $p->status ?? 'SUBMIT',
+                'kecamatan' => $p->dataSiswa->kecamatan ?? 'Tidak diketahui',
+                'alamat' => $p->dataSiswa->alamat ?? '-'
+            ];
+        })
+);
+
+const markers = L.markerClusterGroup({
+    maxClusterRadius: 50,
+    spiderfyOnMaxZoom: true,
+    showCoverageOnHover: false
+});
+
+const kecamatanCount = {};
+let maxDistance = 0;
+const centerPoint = [-6.9175, 107.6191]; // SMK location
+
+pendaftarMapData.forEach(function(p) {
+    if (p.lat && p.lng && !isNaN(p.lat) && !isNaN(p.lng) && p.lat != 0 && p.lng != 0) {
+        let statusBadge = 'primary';
+        switch(p.status) {
+            case 'LULUS': statusBadge = 'success'; break;
+            case 'TIDAK_LULUS': statusBadge = 'danger'; break;
+            case 'CADANGAN': statusBadge = 'secondary'; break;
+            default: statusBadge = 'primary';
+        }
+        
+        const marker = L.marker([parseFloat(p.lat), parseFloat(p.lng)])
+            .bindPopup(`
+                <div style="min-width: 200px;">
+                    <strong>${p.nama}</strong><br>
+                    <small>Jurusan: ${p.jurusan}</small><br>
+                    <small>Kecamatan: ${p.kecamatan}</small><br>
+                    <small>Status: <span class="badge bg-${statusBadge}">${p.status}</span></small>
+                </div>
+            `);
+        markers.addLayer(marker);
+        
+        // Count kecamatan
+        kecamatanCount[p.kecamatan] = (kecamatanCount[p.kecamatan] || 0) + 1;
+        
+        // Calculate distance
+        const distance = mapDashboard.distance([p.lat, p.lng], centerPoint) / 1000;
+        if (distance > maxDistance) maxDistance = distance;
+    }
+});
+
+mapDashboard.addLayer(markers);
+
+// Update statistics
+document.getElementById('totalLokasi').textContent = pendaftarMapData.length;
+
+const topKecamatan = Object.entries(kecamatanCount)
+    .sort((a, b) => b[1] - a[1])[0];
+if (topKecamatan) {
+    document.getElementById('kecamatanTop').textContent = `${topKecamatan[0]} (${topKecamatan[1]})`;
+}
+
+document.getElementById('radiusTerjauh').textContent = maxDistance > 0 ? `${maxDistance.toFixed(1)} km` : '-';
+document.getElementById('clusterTerbesar').textContent = Object.keys(kecamatanCount).length > 0 ? `${Math.max(...Object.values(kecamatanCount))} siswa` : '-';
+
+// Fit bounds
+if (pendaftarMapData.length > 0) {
+    const bounds = markers.getBounds();
+    if (bounds.isValid()) {
+        mapDashboard.fitBounds(bounds.pad(0.1));
+    }
 }
 </script>
 @endsection
