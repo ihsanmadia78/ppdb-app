@@ -61,7 +61,7 @@
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 @if($j->pendaftar_count == 0)
-                                <form method="POST" action="{{ route('admin.jurusan.destroy', $j->id) }}" class="d-inline" onsubmit="return confirm('Yakin hapus jurusan ini?')">
+                                <form method="POST" action="{{ route('admin.jurusan.delete', $j->id) }}" class="d-inline" onsubmit="return confirm('Yakin hapus jurusan ini?')">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger">
                                         <i class="fas fa-trash"></i>
@@ -120,7 +120,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST" id="editForm">
-                @csrf @method('PUT')
+                @csrf
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Jurusan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -150,7 +150,7 @@
 
 <script>
 function editJurusan(id, nama, kode, kuota) {
-    document.getElementById('editForm').action = `{{ url('/admin/jurusan') }}/${id}`;
+    document.getElementById('editForm').action = `{{ url('/admin/jurusan/update') }}/${id}`;
     document.getElementById('editNama').value = nama;
     document.getElementById('editKode').value = kode;
     document.getElementById('editKuota').value = kuota;
