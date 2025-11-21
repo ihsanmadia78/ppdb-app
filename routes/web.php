@@ -31,12 +31,6 @@ Route::middleware(['auth', 'prevent.back'])->group(function () {
     Route::get('/admin/ditolak', [AdminController::class, 'ditolak'])->name('admin.ditolak');
     Route::get('/admin/cadangan', [AdminController::class, 'cadangan'])->name('admin.cadangan');
     
-    // Jurusan Management (AdminController)
-    Route::get('/admin/jurusan-manage', [AdminController::class, 'jurusan'])->name('admin.jurusan.manage');
-    Route::post('/admin/jurusan', [AdminController::class, 'jurusanStore'])->name('admin.jurusan.store');
-    Route::put('/admin/jurusan/{id}', [AdminController::class, 'jurusanUpdate'])->name('admin.jurusan.update');
-    Route::delete('/admin/jurusan/{id}', [AdminController::class, 'jurusanDestroy'])->name('admin.jurusan.destroy');
-    
     // Jurusan Management
     Route::get('/admin/jurusan', [JurusanController::class, 'index'])->name('admin.jurusan');
     Route::post('/admin/jurusan/store', [JurusanController::class, 'store'])->name('admin.jurusan.store');
