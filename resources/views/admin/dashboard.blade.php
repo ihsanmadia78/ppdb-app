@@ -147,11 +147,25 @@
         </div>
 
     <div class="row mb-4">
-        <!-- Chart Total Pendaftar -->
+        <!-- Chart Tren Pendaftar Harian -->
         <div class="col-lg-4 col-md-12 mb-4">
             <div class="card shadow h-100">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-gray-800">📈 Total Pendaftar per Jurusan</h6>
+                    <h6 class="m-0 font-weight-bold text-gray-800">📈 Tren Pendaftar Harian</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area" style="height: 250px; position: relative;">
+                        <canvas id="chartTrenHarian"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Pendaftar Per Jurusan -->
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-gray-800">🎓 Pendaftar Per Jurusan</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area" style="height: 250px; position: relative;">
@@ -161,29 +175,15 @@
             </div>
         </div>
 
-        <!-- Chart Terverifikasi -->
+        <!-- Chart Status Pendaftaran -->
         <div class="col-lg-4 col-md-12 mb-4">
             <div class="card shadow h-100">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-gray-800">✅ Terverifikasi per Jurusan</h6>
+                    <h6 class="m-0 font-weight-bold text-gray-800">📊 Status Pendaftaran</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-area" style="height: 250px; position: relative;">
-                        <canvas id="chartTerverifikasi"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chart Sudah Bayar -->
-        <div class="col-lg-4 col-md-12 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-gray-800">💰 Sudah Bayar per Jurusan</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-area" style="height: 250px; position: relative;">
-                        <canvas id="chartSudahBayar"></canvas>
+                        <canvas id="chartStatus"></canvas>
                     </div>
                 </div>
             </div>
@@ -774,22 +774,86 @@ document.addEventListener('DOMContentLoaded', function() {
     // Data untuk Chart.js
     const labels = @json($labels);
     const data = @json($data);
-    const terverifikasiData = @json($terverifikasiData);
-    const sudahBayarData = @json($sudahBayarData);
+    const statistikHarian = @json($statistikHarian);
 
     const colors = [
         '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF'
     ];
 
-    // Chart Total Pendaftar
+    // Chart 1: Tren Pendaftar Harian (7 hari terakhir)
+    new Chart(document.getElementById('chartTrenHarian'), {
+        type: 'line',
+        data: {
+            labels: statistikHarian.map(item => item.tanggal),
+            datasets: [{
+                label: 'Pendaftar',
+                data: statistikHarian.map(item => item.jumlah),
+                backgroundColor: 'rgba(108, 117, 125, 0.1)',
+                borderColor: '#6c757d',
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+                pointBackgroundColor: '#6c757d',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 2,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+
+    // Chart 2: Pendaftar Per Jurusan
     new Chart(document.getElementById('chartJurusan'), {
-        type: 'doughnut',
+        type: 'bar',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Total Pendaftar',
+                label: 'Pendaftar',
                 data: data,
                 backgroundColor: colors,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+
+    // Chart 3: Status Pendaftaran
+    new Chart(document.getElementById('chartStatus'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Diterima', 'Menunggu', 'Ditolak', 'Cadangan'],
+            datasets: [{
+                data: [
+                    {{ $diterima }},
+                    {{ $menunggu }},
+                    {{ $ditolak }},
+                    {{ $cadangan }}
+                ],
+                backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6c757d'],
                 borderWidth: 2,
                 borderColor: '#f8f9fa'
             }]
@@ -805,62 +869,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         padding: 10,
                         font: { size: 10 }
                     }
-                }
-            }
-        }
-    });
-
-    // Chart Terverifikasi
-    new Chart(document.getElementById('chartTerverifikasi'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Terverifikasi',
-                data: terverifikasiData,
-                backgroundColor: '#28a745',
-                borderColor: '#1e7e34',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1 }
-                }
-            }
-        }
-    });
-
-    // Chart Sudah Bayar
-    new Chart(document.getElementById('chartSudahBayar'), {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Sudah Bayar',
-                data: sudahBayarData,
-                backgroundColor: '#007bff',
-                borderColor: '#0056b3',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { stepSize: 1 }
                 }
             }
         }
