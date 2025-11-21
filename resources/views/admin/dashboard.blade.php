@@ -57,9 +57,8 @@
 
         <!-- Modern Stats Cards -->
         <div class="stats-section mb-5">
-            <!-- Baris 1: Statistik Utama -->
-            <div class="row g-4 mb-4">
-                <div class="col-lg-4 col-md-6">
+            <div class="row g-4">
+                <div class="col-lg col-md-6">
                     <div class="stat-card stat-card-primary">
                         <div class="stat-card-body">
                             <div class="stat-icon">
@@ -76,45 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-card stat-card-success">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $diterima }}</div>
-                                <div class="stat-label">Diterima</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-arrow-up"></i>
-                                    <span>{{ $total > 0 ? round(($diterima/$total)*100, 1) : 0 }}% dari total</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-card stat-card-warning">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $menunggu }}</div>
-                                <div class="stat-label">Menunggu Proses</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-hourglass-half"></i>
-                                    <span>Perlu verifikasi</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Baris 2: Verifikasi Berkas -->
-            <div class="row g-4 mb-4">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg col-md-6">
                     <div class="stat-card stat-card-success">
                         <div class="stat-card-body">
                             <div class="stat-icon">
@@ -122,171 +83,61 @@
                             </div>
                             <div class="stat-content">
                                 <div class="stat-number">{{ $berkasApproved }}</div>
-                                <div class="stat-label">Berkas Disetujui</div>
+                                <div class="stat-label">Sudah Verifikasi Administrasi</div>
                                 <div class="stat-trend">
                                     <i class="fas fa-check"></i>
-                                    <span>Verifikator</span>
+                                    <span>Berkas disetujui</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-card stat-card-warning">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-file-clock"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $berkasPending }}</div>
-                                <div class="stat-label">Berkas Menunggu</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-hourglass-half"></i>
-                                    <span>Perlu verifikasi</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-card stat-card-danger">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-file-times"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $berkasRejected }}</div>
-                                <div class="stat-label">Berkas Ditolak</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-times"></i>
-                                    <span>Perlu perbaikan</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Baris 3: Pembayaran -->
-            <div class="row g-4 mb-4">
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-card stat-card-success">
+                <div class="col-lg col-md-6">
+                    <div class="stat-card stat-card-info">
                         <div class="stat-card-body">
                             <div class="stat-icon">
                                 <i class="fas fa-money-check-alt"></i>
                             </div>
                             <div class="stat-content">
                                 <div class="stat-number">{{ $jumlahSudahBayar }}</div>
-                                <div class="stat-label">Pembayaran Verified</div>
+                                <div class="stat-label">Sudah Bayar</div>
                                 <div class="stat-trend">
                                     <i class="fas fa-check-circle"></i>
-                                    <span>Keuangan</span>
+                                    <span>Pembayaran verified</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-card stat-card-info">
+                <div class="col-lg col-md-6">
+                    <div class="stat-card stat-card-warning">
                         <div class="stat-card-body">
                             <div class="stat-icon">
                                 <i class="fas fa-clock"></i>
                             </div>
                             <div class="stat-content">
-                                <div class="stat-number">{{ $jumlahMenungguVerifikasi }}</div>
-                                <div class="stat-label">Menunggu Verifikasi</div>
+                                <div class="stat-number">{{ $berkasPending }}</div>
+                                <div class="stat-label">Belum Verifikasi</div>
                                 <div class="stat-trend">
                                     <i class="fas fa-hourglass-half"></i>
-                                    <span>Pembayaran</span>
+                                    <span>Menunggu proses</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="stat-card stat-card-danger">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-times-circle"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $jumlahPembayaranDitolak }}</div>
-                                <div class="stat-label">Pembayaran Ditolak</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-ban"></i>
-                                    <span>Perlu upload ulang</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Baris 4: Status Akhir -->
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6">
-                    <div class="stat-card stat-card-info">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-list-alt"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $cadangan }}</div>
-                                <div class="stat-label">Cadangan</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-pause"></i>
-                                    <span>Daftar tunggu</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stat-card stat-card-danger">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-times-circle"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $ditolak }}</div>
-                                <div class="stat-label">Ditolak</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-arrow-down"></i>
-                                    <span>{{ $total > 0 ? round(($ditolak/$total)*100, 1) : 0 }}% dari total</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg col-md-6">
                     <div class="stat-card stat-card-secondary">
                         <div class="stat-card-body">
                             <div class="stat-icon">
                                 <i class="fas fa-percentage"></i>
                             </div>
                             <div class="stat-content">
-                                <div class="stat-number">{{ $total > 0 ? round((($diterima + $cadangan)/$total)*100, 1) : 0 }}%</div>
-                                <div class="stat-label">Tingkat Penerimaan</div>
+                                <div class="stat-number">{{ $total > 0 ? round(($diterima/$total)*100, 1) : 0 }}%</div>
+                                <div class="stat-label">Persentase Kuota Terpenuhi</div>
                                 <div class="stat-trend">
                                     <i class="fas fa-chart-pie"></i>
-                                    <span>Diterima + Cadangan</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="stat-card stat-card-dark">
-                        <div class="stat-card-body">
-                            <div class="stat-icon">
-                                <i class="fas fa-chart-bar"></i>
-                            </div>
-                            <div class="stat-content">
-                                <div class="stat-number">{{ $total - $menunggu }}</div>
-                                <div class="stat-label">Selesai Diproses</div>
-                                <div class="stat-trend">
-                                    <i class="fas fa-check-double"></i>
-                                    <span>Final</span>
+                                    <span>Siswa diterima</span>
                                 </div>
                             </div>
                         </div>
