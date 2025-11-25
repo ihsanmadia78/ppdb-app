@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body { 
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); 
+            background: #37474f; 
             min-height: 100vh; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -18,12 +18,12 @@
             border: none;
         }
         .btn-primary { 
-            background: linear-gradient(45deg, #495057, #6c757d); 
+            background: #37474f; 
             border: none;
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
-            background: linear-gradient(45deg, #343a40, #495057);
+            background: #37474f;
             transform: translateY(-2px);
         }
         .form-control {
@@ -33,8 +33,8 @@
             transition: all 0.3s ease;
         }
         .form-control:focus {
-            border-color: #495057;
-            box-shadow: 0 0 0 0.2rem rgba(73, 80, 87, 0.25);
+            border-color: #37474f;
+            box-shadow: 0 0 0 0.2rem rgba(74, 20, 140, 0.25);
         }
         .form-label {
             font-weight: 600;

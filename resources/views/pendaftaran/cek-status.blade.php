@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: #f8f9fa;
+            background: #37474f;
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #212529;
@@ -21,7 +21,7 @@
             margin: 2rem 0;
         }
         .check-header {
-            background: #6c757d;
+            background: #37474f;
             color: white;
             padding: 2rem;
             text-align: center;
@@ -77,11 +77,11 @@
             font-size: 10px;
         }
         .btn-primary {
-            background: #6c757d;
+            background: #37474f;
             border: none;
         }
         .btn-primary:hover {
-            background: #495057;
+            background: #37474f;
         }
     </style>
 </head>

@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e9ecef 100%);
+            background: #37474f;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -61,8 +61,8 @@
             transition: all 0.3s ease;
         }
         .form-control:focus {
-            border-color: #6c757d;
-            box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.1);
+            border-color: #37474f;
+            box-shadow: 0 0 0 3px rgba(74, 20, 140, 0.1);
         }
         .input-group-text {
             background: #f8f9fa;
@@ -71,7 +71,7 @@
             color: #6c757d;
         }
         .btn-primary {
-            background: #6c757d;
+            background: #37474f;
             border: none;
             border-radius: 8px;
             padding: 12px 24px;
@@ -79,19 +79,20 @@
             transition: all 0.3s ease;
         }
         .btn-primary:hover {
-            background: #5a6268;
+            background: #37474f;
             transform: translateY(-1px);
         }
         .btn-outline-secondary {
-            border: 2px solid #6c757d;
-            color: #6c757d;
+            border: 2px solid #37474f;
+            color: #37474f;
             border-radius: 8px;
             padding: 10px 20px;
             font-weight: 500;
         }
         .btn-outline-secondary:hover {
-            background: #6c757d;
-            border-color: #6c757d;
+            background: #37474f;
+            border-color: #37474f;
+            color: white;
         }
         .text-muted {
             color: #666666 !important;

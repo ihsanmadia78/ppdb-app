@@ -1,0 +1,121 @@
+/* Dashboard Responsive Styles */
+
+/* Dashboard Header Styles */
+.dashboard-header {
+    background: #37474f;
+    padding: 1.5rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.dashboard-title {
+    color: white !important;
+    font-weight: 700;
+}
+
+.dashboard-subtitle {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.breadcrumb-custom {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.date-display, .user-info {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.date-display i, .user-info i {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Mobile First - Base Styles */
+.dashboard-container {
+    padding: 0.5rem;
+}
+
+.stat-card-body {
+    padding: 1rem;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+}
+
+.chart-area {
+    height: 200px !important;
+}
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    .stat-number {
+        font-size: 2rem;
+    }
+    .chart-area {
+        height: 250px !important;
+    }
+}
+
+/* Desktop (992px+) */
+@media (min-width: 992px) {
+    .stat-card-body {
+        padding: 2rem;
+    }
+    .stat-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+    .stat-number {
+        font-size: 2.5rem;
+    }
+}
+
+/* Mobile (max 576px) */
+@media (max-width: 576px) {
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    .stat-label {
+        font-size: 0.75rem;
+    }
+    .menu-btn {
+        padding: 0.75rem !important;
+    }
+    .menu-btn i {
+        font-size: 1.2rem !important;
+    }
+    .menu-btn small {
+        display: none !important;
+    }
+    .table {
+        font-size: 0.85rem;
+    }
+}

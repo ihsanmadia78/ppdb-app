@@ -25,7 +25,7 @@
             overflow: hidden;
         }
         .login-header {
-            background: #6c757d;
+            background: #37474f;
             color: white;
             text-align: center;
             padding: 20px;
@@ -44,13 +44,13 @@
             color: #212529;
         }
         .btn-primary {
-            background: #6c757d;
+            background: #37474f;
             border: none;
             transition: 0.3s;
             color: #ffffff;
         }
         .btn-primary:hover {
-            background: #495057;
+            background: #37474f;
         }
         .footer {
             text-align: center;
@@ -63,8 +63,8 @@
             color: #212529;
         }
         .form-control:focus {
-            border-color: #6c757d;
-            box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+            border-color: #37474f;
+            box-shadow: 0 0 0 0.2rem rgba(74, 20, 140, 0.25);
         }
         .alert-danger {
             background-color: #f8d7da;
@@ -78,8 +78,8 @@
 <div class="login-card">
     <div class="login-header">
         <img src="{{ asset('img/smk.png') }}" alt="Logo SMK BaktiNusantara 666" style="width: 60px; height: 60px; margin-bottom: 10px; border-radius: 50%; background: white; padding: 5px;">
-        <h4>Login Admin PPDB</h4>
-        <p class="mb-0" style="font-size: 14px; opacity: 0.9;">SMK BaktiNusantara 666</p>
+        <h4 style="color: #ffffff;">Login Admin PPDB</h4>
+        <p class="mb-0" style="font-size: 14px; color: #ffffff; opacity: 0.95;">SMK BaktiNusantara 666</p>
     </div>
     <div class="login-body">
         @if (session('error'))

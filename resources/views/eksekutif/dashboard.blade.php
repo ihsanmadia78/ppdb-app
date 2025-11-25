@@ -1,14 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.sidebar')
 
 @section('content')
 <div class="container-fluid px-4 py-4">
     <!-- HEADER SECTION -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+        <div class="mb-3 mb-md-0">
             <h1 class="h3 mb-0 text-gray-800">📊 Dashboard Eksekutif</h1>
-            <p class="text-muted mb-0">PPDB SMK BaktiNusantara 666 - {{ date('d F Y') }}</p>
+            <p class="text-muted mb-0 d-none d-md-block">PPDB SMK BaktiNusantara 666 - {{ date('d F Y') }}</p>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex flex-wrap gap-2">
             <div class="dropdown">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                     <i class="fas fa-print"></i> Cetak Laporan
@@ -78,7 +78,7 @@
         <div class="card-body">
             <!-- Baris 1: Data Utama -->
             <div class="row mb-4">
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-primary h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-success h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-info h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-warning h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -146,7 +146,7 @@
 
             <!-- Baris 2: Status Kelulusan -->
             <div class="row">
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-success h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -162,7 +162,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-warning h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-danger h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -194,7 +194,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-md-6 mb-3">
+                <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6 mb-3">
                     <div class="card border-left-info h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -221,10 +221,10 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-xl-8 col-lg-7 mb-4">
+                <div class="col-xl-8 col-lg-12 mb-4">
                     <canvas id="kuotaChart" height="120"></canvas>
                 </div>
-                <div class="col-xl-4 col-lg-5">
+                <div class="col-xl-4 col-lg-12">
                     <div class="table-responsive">
                         <table class="table table-sm table-bordered">
                             <thead class="table-dark">
@@ -270,7 +270,7 @@
     <!-- SECTION 4: TREN & ANALISIS -->
     <div class="row mb-4">
         <!-- Tren Pendaftaran -->
-        <div class="col-xl-8 col-lg-7">
+        <div class="col-xl-8 col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <div class="d-flex justify-content-between align-items-center">
@@ -331,7 +331,7 @@
         </div>
 
         <!-- Status Distribution -->
-        <div class="col-xl-4 col-lg-5">
+        <div class="col-xl-4 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">📊 Distribusi Status</h6>
@@ -346,7 +346,7 @@
     <!-- SECTION 5: ANALISIS GEOGRAFIS & ASAL SEKOLAH -->
     <div class="row mb-4">
         <!-- Asal Sekolah -->
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-6 col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">🏫 Top 5 Asal Sekolah</h6>
@@ -369,7 +369,7 @@
         </div>
 
         <!-- Sebaran Wilayah -->
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-6 col-lg-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">🗺️ Sebaran Wilayah Pendaftar</h6>

@@ -6,6 +6,7 @@
     <title>PPDB SMK BaktiNusantara 666 - Selamat Datang</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ asset('css/purple-theme.css') }}" rel="stylesheet">
     <style>
         .hero-section {
             background: #f8f9fa;
@@ -27,7 +28,7 @@
             padding: 80px 0;
         }
         .cta-section {
-            background: #6c757d;
+            background: #37474f;
             color: white;
             padding: 80px 0;
         }
@@ -36,13 +37,13 @@
             font-size: 1.5rem;
         }
         .navbar-custom {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background: #37474f;
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
         .navbar-custom.scrolled {
-            background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+            background: #37474f;
             box-shadow: 0 4px 30px rgba(0,0,0,0.2);
         }
         .navbar-nav .nav-link {
@@ -55,8 +56,8 @@
             position: relative;
         }
         .navbar-nav .nav-link:hover {
-            color: #3498db !important;
-            background: rgba(52, 152, 219, 0.1);
+            color: #fff !important;
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
         }
         .navbar-nav .nav-link::after {
@@ -66,7 +67,7 @@
             height: 2px;
             bottom: 5px;
             left: 50%;
-            background: #3498db;
+            background: #fff;
             transition: all 0.3s ease;
             transform: translateX(-50%);
         }
@@ -74,26 +75,23 @@
             width: 80%;
         }
         .btn-login {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
             padding: 0.6rem 1.5rem;
             border-radius: 25px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            backdrop-filter: blur(10px);
         }
         .btn-login:hover {
-            background: linear-gradient(45deg, #2980b9, #3498db);
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
             color: white;
         }
         .navbar-brand-text {
-            background: linear-gradient(45deg, #3498db, #2ecc71);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
             font-weight: 700;
         }
         .school-logo-container {
@@ -136,7 +134,7 @@
             height: 40px;
             object-fit: contain;
             border-radius: 10px;
-            background: linear-gradient(45deg, #ffffff, #f8f9fa);
+            background: #37474f;
             padding: 3px;
             border: 2px solid rgba(255,255,255,0.2);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -258,13 +256,13 @@
                         Daftar sekarang dan wujudkan impian pendidikan Anda!
                     </p>
                     <div class="d-flex gap-3">
-                        <a href="{{ route('register') }}" class="btn btn-secondary btn-lg px-4">
+                        <a href="{{ route('register') }}" class="btn btn-lg px-4" style="background: #37474f; color: white; border: none;">
                             <i class="fas fa-user-plus me-2"></i>Daftar Sekarang
                         </a>
-                        <a href="{{ route('pendaftaran.cek') }}" class="btn btn-outline-secondary btn-lg px-4">
+                        <a href="{{ route('pendaftaran.cek') }}" class="btn btn-outline-purple btn-lg px-4" style="border-color: #37474f; color: #37474f;">
                             <i class="fas fa-search me-2"></i>Cek Status
                         </a>
-                        <a href="{{ route('siswa.login') }}" class="btn btn-outline-secondary btn-lg px-4">
+                        <a href="{{ route('siswa.login') }}" class="btn btn-outline-purple btn-lg px-4" style="border-color: #37474f; color: #37474f;">
                             <i class="fas fa-sign-in-alt me-2"></i>Portal Siswa
                         </a>
                     </div>
@@ -288,7 +286,7 @@
                 <div class="col-md-3 mb-4">
                     <div class="card feature-card h-100">
                         <div class="card-body">
-                            <i class="fas fa-users fa-3x text-secondary mb-3"></i>
+                            <i class="fas fa-users fa-3x mb-3" style="color: #37474f;"></i>
                             <h3 class="fw-bold">1000+</h3>
                             <p class="text-muted">Siswa Terdaftar</p>
                         </div>
@@ -297,7 +295,7 @@
                 <div class="col-md-3 mb-4">
                     <div class="card feature-card h-100">
                         <div class="card-body">
-                            <i class="fas fa-book fa-3x text-secondary mb-3"></i>
+                            <i class="fas fa-book fa-3x mb-3" style="color: #37474f;"></i>
                             <h3 class="fw-bold">15+</h3>
                             <p class="text-muted">Program Keahlian</p>
                         </div>
@@ -306,7 +304,7 @@
                 <div class="col-md-3 mb-4">
                     <div class="card feature-card h-100">
                         <div class="card-body">
-                            <i class="fas fa-award fa-3x text-secondary mb-3"></i>
+                            <i class="fas fa-award fa-3x mb-3" style="color: #37474f;"></i>
                             <h3 class="fw-bold">95%</h3>
                             <p class="text-muted">Tingkat Kelulusan</p>
                         </div>
@@ -315,7 +313,7 @@
                 <div class="col-md-3 mb-4">
                     <div class="card feature-card h-100">
                         <div class="card-body">
-                            <i class="fas fa-clock fa-3x text-secondary mb-3"></i>
+                            <i class="fas fa-clock fa-3x mb-3" style="color: #37474f;"></i>
                             <h3 class="fw-bold">24/7</h3>
                             <p class="text-muted">Pendaftaran Online</p>
                         </div>
@@ -332,44 +330,44 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center mb-5">
-                    <h2 class="fw-bold text-secondary">Panduan Pendaftaran</h2>
+                    <h2 class="fw-bold" style="color: #37474f;">Panduan Pendaftaran</h2>
                     <p class="text-muted">Ikuti langkah-langkah mudah berikut</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 mb-4">
                     <div class="text-center">
-                        <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <div class="text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background: #37474f;">
                             <span class="fw-bold fs-4">1</span>
                         </div>
-                        <h5 class="fw-bold text-secondary">Registrasi Akun</h5>
+                        <h5 class="fw-bold" style="color: #37474f;">Registrasi Akun</h5>
                         <p class="text-muted">Buat akun dan verifikasi email dengan kode OTP</p>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
                     <div class="text-center">
-                        <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <div class="text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background: #37474f;">
                             <span class="fw-bold fs-4">2</span>
                         </div>
-                        <h5 class="fw-bold text-secondary">Isi Formulir</h5>
+                        <h5 class="fw-bold" style="color: #37474f;">Isi Formulir</h5>
                         <p class="text-muted">Lengkapi data dan upload berkas persyaratan</p>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
                     <div class="text-center">
-                        <div class="bg-dark text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <div class="text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background: #37474f;">
                             <span class="fw-bold fs-4">3</span>
                         </div>
-                        <h5 class="fw-bold text-secondary">Verifikasi</h5>
+                        <h5 class="fw-bold" style="color: #37474f;">Verifikasi</h5>
                         <p class="text-muted">Tunggu proses verifikasi dari admin sekolah</p>
                     </div>
                 </div>
                 <div class="col-md-3 mb-4">
                     <div class="text-center">
-                        <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                        <div class="text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px; background: #37474f;">
                             <span class="fw-bold fs-4">4</span>
                         </div>
-                        <h5 class="fw-bold text-secondary">Pengumuman</h5>
+                        <h5 class="fw-bold" style="color: #37474f;">Pengumuman</h5>
                         <p class="text-muted">Cek status kelulusan secara online</p>
                     </div>
                 </div>
@@ -382,7 +380,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center mb-5">
-                    <h2 class="fw-bold text-secondary">Berita Sekolah</h2>
+                    <h2 class="fw-bold" style="color: #37474f;">Berita Sekolah</h2>
                     <p class="text-muted">Informasi terbaru dari SMK BaktiNusantara 666</p>
                 </div>
             </div>
@@ -441,7 +439,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center mb-5">
-                    <h2 class="fw-bold text-secondary">Lokasi Sekolah</h2>
+                    <h2 class="fw-bold" style="color: #37474f;">Lokasi Sekolah</h2>
                     <p class="text-muted">SMK BaktiNusantara 666 - Temukan kami di sini</p>
                 </div>
             </div>
@@ -464,7 +462,7 @@
                 <div class="col-lg-4">
                     <div class="card feature-card h-100">
                         <div class="card-body">
-                            <h5 class="fw-bold text-secondary mb-4">Informasi Kontak</h5>
+                            <h5 class="fw-bold mb-4" style="color: #37474f;">Informasi Kontak</h5>
                             <div class="mb-3">
                                 <i class="fas fa-map-marker-alt text-danger me-3"></i>
                                 <strong>Alamat:</strong><br>
@@ -497,7 +495,7 @@
         <div class="container text-center">
             <h2 class="fw-bold mb-4">Siap Memulai Pendaftaran?</h2>
             <p class="lead mb-4">Jangan lewatkan kesempatan emas ini. Daftar sekarang dan raih masa depan cerah!</p>
-            <a href="{{ route('register') }}" class="btn btn-light btn-lg px-5 text-secondary me-3">
+            <a href="{{ route('register') }}" class="btn btn-light btn-lg px-5 me-3" style="color: #37474f;">
                 <i class="fas fa-rocket me-2"></i>Mulai Daftar
             </a>
             <a href="{{ route('registration.flow') }}" class="btn btn-outline-light">
@@ -507,7 +505,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-secondary text-white py-4">
+    <footer class="text-white py-4" style="background: #37474f;">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -517,12 +515,12 @@
                         </div>
                         <div>
                             <h5 class="mb-1">PPDB SMK BaktiNusantara 666</h5>
-                            <p class="text-muted mb-0">Sistem Penerimaan Peserta Didik Baru yang terpercaya</p>
+                            <p class="mb-0" style="color: rgba(255,255,255,0.8);">Sistem Penerimaan Peserta Didik Baru yang terpercaya</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <p class="text-muted mb-0">&copy; {{ date('Y') }} PPDB SMK BaktiNusantara 666. All rights reserved.</p>
+                    <p class="mb-0" style="color: rgba(255,255,255,0.8);">&copy; {{ date('Y') }} PPDB SMK BaktiNusantara 666. All rights reserved.</p>
                 </div>
             </div>
         </div>

@@ -1,0 +1,84 @@
+/* Purple Theme - Replace Secondary Colors */
+
+/* Background Colors */
+.bg-purple {
+    background: #37474f !important;
+}
+
+/* Text Colors */
+.text-purple {
+    color: #37474f !important;
+}
+
+/* Buttons */
+.btn-purple {
+    background: #37474f;
+    border: none;
+    color: white;
+}
+
+.btn-purple:hover {
+    background: #37474f;
+    color: white;
+}
+
+.btn-outline-purple {
+    border: 2px solid #37474f;
+    color: #37474f;
+    background: transparent;
+}
+
+.btn-outline-purple:hover {
+    background: #37474f;
+    border-color: #37474f;
+    color: white;
+}
+
+/* Badges */
+.badge-purple {
+    background: #37474f;
+    color: white;
+}
+
+/* Alerts */
+.alert-purple {
+    background: rgba(74, 20, 140, 0.1);
+    border-color: #37474f;
+    color: #37474f;
+}
+
+/* Cards */
+.card-purple {
+    border-top: 3px solid #37474f;
+}
+
+/* Links */
+a.text-purple:hover {
+    color: #37474f !important;
+}
+
+/* Table */
+.table-purple thead {
+    background: #37474f;
+    color: white;
+}
+
+/* Progress Bar */
+.progress-bar-purple {
+    background: #37474f;
+}
+
+/* Border */
+.border-purple {
+    border-color: #37474f !important;
+}
+
+/* Replace all gray/secondary colors globally */
+.text-gray-800 {
+    color: #37474f !important;
+}
+
+.text-muted {
+    color: #37474f !important;
+    opacity: 0.8;
+}

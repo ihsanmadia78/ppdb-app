@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.sidebar')
 
 @section('content')
 <div class="dashboard-container">
@@ -56,9 +56,9 @@
         <div class="container-fluid">
 
         <!-- Modern Stats Cards -->
-        <div class="stats-section mb-5">
-            <div class="row g-4">
-                <div class="col-lg col-md-6">
+        <div class="stats-section mb-3">
+            <div class="row g-3">
+                <div class="col-xl-20 col-lg-6 col-md-6">
                     <div class="stat-card stat-card-primary">
                         <div class="stat-card-body">
                             <div class="stat-icon">
@@ -75,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg col-md-6">
+                <div class="col-xl-20 col-lg-6 col-md-6">
                     <div class="stat-card stat-card-success">
                         <div class="stat-card-body">
                             <div class="stat-icon">
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg col-md-6">
+                <div class="col-xl-20 col-lg-6 col-md-6">
                     <div class="stat-card stat-card-info">
                         <div class="stat-card-body">
                             <div class="stat-icon">
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg col-md-6">
+                <div class="col-xl-20 col-lg-6 col-md-6">
                     <div class="stat-card stat-card-warning">
                         <div class="stat-card-body">
                             <div class="stat-icon">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg col-md-6">
+                <div class="col-xl-20 col-lg-6 col-md-6">
                     <div class="stat-card stat-card-secondary">
                         <div class="stat-card-body">
                             <div class="stat-icon">
@@ -415,20 +415,22 @@
 <style>
 /* Modern Dashboard Styling */
 .dashboard-container {
-    background: #f8f9fa;
+    background: #f0f2f5;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
 .dashboard-header {
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    background: #37474f;
     color: white;
-    padding: 2rem 0;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    padding: 1.5rem 0;
+    margin: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .dashboard-title {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
     display: flex;
@@ -436,21 +438,22 @@
 }
 
 .title-icon {
-    margin-right: 1rem;
-    font-size: 2rem;
+    margin-right: 0.75rem;
+    font-size: 1.5rem;
 }
 
 .dashboard-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     opacity: 0.9;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .breadcrumb-custom {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.15);
     padding: 0.5rem 1rem;
-    border-radius: 25px;
+    border-radius: 20px;
     display: inline-block;
+    backdrop-filter: blur(10px);
 }
 
 .header-actions {
@@ -458,28 +461,30 @@
 }
 
 .date-display, .user-info {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.15);
     padding: 0.5rem 1rem;
-    border-radius: 25px;
+    border-radius: 20px;
     display: inline-block;
     font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    color: white;
 }
 
 .dashboard-content {
-    padding: 0 1rem 2rem;
+    padding: 1.5rem;
 }
 
 /* Modern Stats Cards */
 .stats-section {
-    margin-top: -3rem;
+    margin-top: 0;
     position: relative;
     z-index: 10;
 }
 
 .stat-card {
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     border: none;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -487,54 +492,55 @@
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .stat-card-body {
-    padding: 2rem;
+    padding: 1.25rem;
     display: flex;
     align-items: center;
 }
 
 .stat-icon {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 1.5rem;
-    font-size: 1.8rem;
+    margin-right: 1rem;
+    font-size: 1.3rem;
     color: white;
+    flex-shrink: 0;
 }
 
 .stat-card-primary .stat-icon {
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    background: #37474f;
 }
 
 .stat-card-success .stat-icon {
-    background: linear-gradient(135deg, #adb5bd 0%, #868e96 100%);
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
 }
 
 .stat-card-warning .stat-icon {
-    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 }
 
 .stat-card-danger .stat-icon {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
 }
 
 .stat-card-info .stat-icon {
-    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
 }
 
 .stat-card-secondary .stat-icon {
-    background: linear-gradient(135deg, #adb5bd 0%, #868e96 100%);
+    background: #37474f;
 }
 
 .stat-card-dark .stat-icon {
-    background: linear-gradient(135deg, #343a40 0%, #212529 100%);
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
 
 .stat-content {
@@ -542,22 +548,23 @@
 }
 
 .stat-number {
-    font-size: 2.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     color: #212529;
     line-height: 1;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
 }
 
 .stat-label {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: #495057;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
 }
 
 .stat-trend {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: #6c757d;
     display: flex;
     align-items: center;
@@ -570,70 +577,86 @@
 /* Card Improvements */
 .card {
     border: none;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     transition: all 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
 
 .card-header {
     background: #ffffff;
     border-bottom: 1px solid #dee2e6;
-    border-radius: 15px 15px 0 0 !important;
-    padding: 1.5rem;
+    border-radius: 12px 12px 0 0 !important;
+    padding: 0.875rem 1rem;
 }
 
 .card-header h6 {
     font-weight: 600;
     color: #212529;
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
 }
 
 /* Menu Buttons */
 .menu-btn {
     border: none;
-    border-radius: 15px;
+    border-radius: 12px;
     transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    background: #6c757d;
-    color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    background: white;
+    color: #374151;
 }
 
 .menu-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    background: #495057;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    background: #37474f;
+    color: white;
+}
+
+.btn-primary.menu-btn {
+    background: #37474f;
+    color: white;
 }
 
 .btn-success.menu-btn {
-    background: #adb5bd;
-    color: #212529;
-}
-
-.btn-success.menu-btn:hover {
-    background: #868e96;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
 }
 
 .btn-warning.menu-btn {
-    background: #dee2e6;
-    color: #212529;
-}
-
-.btn-warning.menu-btn:hover {
-    background: #ced4da;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
 }
 
 .btn-info.menu-btn {
-    background: #e9ecef;
-    color: #212529;
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: white;
 }
 
-.btn-info.menu-btn:hover {
-    background: #f8f9fa;
+.btn-dark.menu-btn {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+}
+
+.btn-secondary.menu-btn {
+    background: #37474f;
+    color: white;
+}
+
+/* Custom 5 column grid for XL screens */
+.col-xl-20 {
+    flex: 0 0 auto;
+    width: 20%;
+}
+
+@media (max-width: 1199px) {
+    .col-xl-20 {
+        width: 50%;
+    }
 }
 
 /* Responsive Design */
@@ -703,6 +726,10 @@
     
     .menu-btn small {
         display: none;
+    }
+    
+    .col-xl-20 {
+        width: 100%;
     }
 }
 
