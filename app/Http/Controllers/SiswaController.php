@@ -91,17 +91,27 @@ class SiswaController extends Controller
 
     public function cetakKartu()
     {
-        $user = Auth::user();
-        $pendaftar = Pendaftar::with(['dataSiswa', 'jurusan', 'gelombang'])
-                             ->where('email', $user->email)
-                             ->first();
-        
-        if (!$pendaftar) {
-            return redirect()->back()->with('error', 'Data pendaftaran tidak ditemukan.');
-        }
+        try {
+            $user = Auth::user();
+            $pendaftar = Pendaftar::with(['dataSiswa', 'jurusan', 'gelombang', 'pembayaran'])
+                                 ->where('email', $user->email)
+                                 ->first();
+            
+            if (!$pendaftar) {
+                return redirect()->back()->with('error', 'Data pendaftaran tidak ditemukan.');
+            }
 
-        $pdf = \PDF::loadView('siswa.kartu-peserta', compact('pendaftar'));
-        return $pdf->download('kartu-peserta-' . $pendaftar->no_pendaftaran . '.pdf');
+            // Pastikan data siswa ada
+            if (!$pendaftar->dataSiswa) {
+                return redirect()->back()->with('error', 'Data siswa tidak lengkap. Silakan lengkapi biodata terlebih dahulu.');
+            }
+
+            $pdf = \PDF::loadView('siswa.kartu-peserta', compact('pendaftar'));
+            $pdf->setPaper('A4', 'portrait');
+            return $pdf->download('kartu-peserta-' . $pendaftar->no_pendaftaran . '.pdf');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Gagal mencetak kartu: ' . $e->getMessage());
+        }
     }
 
     public function pembayaran()

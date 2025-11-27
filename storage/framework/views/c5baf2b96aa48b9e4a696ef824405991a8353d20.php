@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('title', 'Detail Pendaftar - Verifikator'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -679,4 +681,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\ppdb-app\resources\views/verifikator/detail.blade.php ENDPATH**/ ?>
+
+<?php echo $__env->make('layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\ppdb-app\resources\views/verifikator/detail.blade.php ENDPATH**/ ?>

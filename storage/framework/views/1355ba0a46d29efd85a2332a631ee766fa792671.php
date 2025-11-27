@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <title>Kartu Peserta PPDB</title>
     <style>
-        @page {
-            margin: 20px;
-        }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -62,12 +59,10 @@
             height: 150px;
             border: 2px solid #000;
             float: right;
-            margin: 0 0 20px 20px;
+            margin: 20px;
             text-align: center;
             line-height: 150px;
             background-color: #f9f9f9;
-            font-size: 10px;
-            color: #999;
         }
         .footer {
             margin-top: 30px;
@@ -87,7 +82,7 @@
 </head>
 <body>
     <div class="header">
-        <img src="{{ public_path('img/smk.png') }}" alt="Logo" class="logo">
+        <img src="<?php echo e(public_path('img/smk.png')); ?>" alt="Logo" class="logo">
         <div class="school-info">
             <h1 class="school-name">SMK BAKTINUSANTARA 666</h1>
             <p class="school-address">
@@ -99,90 +94,78 @@
         <div class="clear"></div>
     </div>
 
-    <h2 class="card-title">KARTU PESERTA PENDAFTARAN SISWA BARU<br>TAHUN AJARAN {{ $pendaftar->gelombang->tahun ?? date('Y') }}</h2>
+    <h2 class="card-title">KARTU PESERTA PENDAFTARAN SISWA BARU</h2>
 
     <div class="photo-box">
         FOTO<br>
-        3x4 cm
+        3x4
     </div>
 
     <table class="student-info">
         <tr>
             <td class="label">No. Pendaftaran</td>
-            <td>{{ $pendaftar->no_pendaftaran }}</td>
+            <td><?php echo e($pendaftar->no_pendaftaran); ?></td>
         </tr>
         <tr>
             <td class="label">Nama Lengkap</td>
-            <td>{{ $pendaftar->dataSiswa->nama ?? $pendaftar->nama ?? '-' }}</td>
+            <td><?php echo e($pendaftar->dataSiswa->nama_lengkap ?? $pendaftar->nama); ?></td>
         </tr>
         <tr>
             <td class="label">NISN</td>
-            <td>{{ $pendaftar->dataSiswa->nisn ?? '-' }}</td>
+            <td><?php echo e($pendaftar->dataSiswa->nisn ?? '-'); ?></td>
         </tr>
         <tr>
             <td class="label">Tempat, Tanggal Lahir</td>
             <td>
-                {{ $pendaftar->dataSiswa->tempat_lahir ?? '-' }}, 
-                {{ $pendaftar->dataSiswa->tanggal_lahir ? \Carbon\Carbon::parse($pendaftar->dataSiswa->tanggal_lahir)->format('d F Y') : '-' }}
+                <?php echo e($pendaftar->dataSiswa->tempat_lahir ?? '-'); ?>, 
+                <?php echo e($pendaftar->dataSiswa->tanggal_lahir ? \Carbon\Carbon::parse($pendaftar->dataSiswa->tanggal_lahir)->format('d F Y') : '-'); ?>
+
             </td>
         </tr>
         <tr>
             <td class="label">Jenis Kelamin</td>
-            <td>{{ isset($pendaftar->dataSiswa->jenis_kelamin) ? ($pendaftar->dataSiswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan') : '-' }}</td>
+            <td><?php echo e($pendaftar->dataSiswa->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan'); ?></td>
         </tr>
         <tr>
             <td class="label">Alamat</td>
-            <td>{{ $pendaftar->dataSiswa->alamat ?? '-' }}</td>
+            <td><?php echo e($pendaftar->dataSiswa->alamat ?? '-'); ?></td>
         </tr>
         <tr>
             <td class="label">No. HP</td>
-            <td>{{ $pendaftar->dataSiswa->no_hp ?? '-' }}</td>
+            <td><?php echo e($pendaftar->dataSiswa->no_hp ?? '-'); ?></td>
         </tr>
         <tr>
             <td class="label">Email</td>
-            <td>{{ $pendaftar->email }}</td>
+            <td><?php echo e($pendaftar->email); ?></td>
         </tr>
         <tr>
             <td class="label">Asal Sekolah</td>
-            <td>{{ $pendaftar->dataSiswa->asal_sekolah ?? '-' }}</td>
+            <td><?php echo e($pendaftar->dataSiswa->asal_sekolah ?? '-'); ?></td>
         </tr>
         <tr>
             <td class="label">Jurusan Pilihan</td>
-            <td>{{ $pendaftar->jurusan->nama ?? '-' }}</td>
+            <td><?php echo e($pendaftar->jurusan->nama ?? '-'); ?></td>
         </tr>
         <tr>
             <td class="label">Gelombang</td>
-            <td>{{ $pendaftar->gelombang->nama ?? '-' }} ({{ $pendaftar->gelombang->tahun ?? '-' }})</td>
+            <td><?php echo e($pendaftar->gelombang->nama ?? '-'); ?> (<?php echo e($pendaftar->gelombang->tahun ?? '-'); ?>)</td>
         </tr>
         <tr>
             <td class="label">Status Pendaftaran</td>
-            <td><strong>{{ $pendaftar->status }}</strong></td>
-        </tr>
-        <tr>
-            <td class="label">Nama Orang Tua/Wali</td>
-            <td>{{ $pendaftar->dataSiswa->nama_ayah ?? '-' }}</td>
-        </tr>
-        <tr>
-            <td class="label">Pekerjaan Orang Tua</td>
-            <td>{{ $pendaftar->dataSiswa->pekerjaan_ayah ?? '-' }}</td>
-        </tr>
-        <tr>
-            <td class="label">No. HP Orang Tua</td>
-            <td>{{ $pendaftar->dataSiswa->no_hp_ortu ?? '-' }}</td>
+            <td><strong><?php echo e($pendaftar->status); ?></strong></td>
         </tr>
     </table>
 
     <div class="clear"></div>
 
     <div class="qr-code">
-        <div style="border: 2px solid #000; width: 100px; height: 100px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 10px;">
-            {{ $pendaftar->no_pendaftaran }}
-        </div>
-        <br><small>Kode Verifikasi: {{ $pendaftar->no_pendaftaran }}</small>
+        <?php echo QrCode::size(100)->generate($pendaftar->no_pendaftaran); ?>
+
+        <br><small>Scan QR Code untuk verifikasi</small>
     </div>
 
     <div class="footer">
-        <p>Bandung, {{ \Carbon\Carbon::now()->format('d F Y') }}</p>
+        <p>Bandung, <?php echo e(\Carbon\Carbon::now()->format('d F Y')); ?></p>
         <div class="signature">
             <p>Kepala Sekolah</p>
             <br><br><br>
@@ -197,8 +180,8 @@
             <li>Kartu ini wajib dibawa saat mengikuti tes seleksi</li>
             <li>Kartu ini tidak dapat dipindahtangankan</li>
             <li>Jika kartu hilang, segera lapor ke panitia PPDB</li>
-            <li>Dicetak pada: {{ \Carbon\Carbon::now()->format('d/m/Y H:i:s') }}</li>
+            <li>Dicetak pada: <?php echo e(\Carbon\Carbon::now()->format('d/m/Y H:i:s')); ?></li>
         </ul>
     </div>
 </body>
-</html>
+</html><?php /**PATH C:\xampp\ppdb-app\resources\views/siswa/kartu-peserta.blade.php ENDPATH**/ ?>
