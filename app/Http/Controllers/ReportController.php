@@ -19,6 +19,10 @@ class ReportController extends Controller
     public function exportExcel(Request $request)
     {
         try {
+            // Increase memory limit and execution time
+            ini_set('memory_limit', '512M');
+            ini_set('max_execution_time', '300');
+            
             $query = Pendaftar::with(['dataSiswa', 'jurusan', 'gelombang']);
             
             // Apply filters
@@ -95,19 +99,19 @@ class ReportController extends Controller
             $row = 2;
             foreach ($pendaftar as $index => $p) {
                 $sheet->setCellValue('A' . $row, $index + 1);
-                $sheet->setCellValue('B' . $row, $p->no_pendaftaran ?? '');
-                $sheet->setCellValue('C' . $row, $p->dataSiswa?->nik ?? '');
-                $sheet->setCellValue('D' . $row, $p->dataSiswa?->nisn ?? '');
-                $sheet->setCellValue('E' . $row, $p->dataSiswa?->nama ?? '');
-                $sheet->setCellValue('F' . $row, $p->dataSiswa?->jk ?? '');
-                $sheet->setCellValue('G' . $row, $p->dataSiswa?->tmp_lahir ?? '');
-                $sheet->setCellValue('H' . $row, $p->dataSiswa?->tgl_lahir ?? '');
-                $sheet->setCellValue('I' . $row, $p->dataSiswa?->alamat ?? '');
-                $sheet->setCellValue('J' . $row, $p->dataSiswa?->no_hp ?? '');
-                $sheet->setCellValue('K' . $row, $p->email ?? '');
-                $sheet->setCellValue('L' . $row, $p->jurusan?->nama ?? '');
-                $sheet->setCellValue('M' . $row, $p->gelombang?->nama ?? '');
-                $sheet->setCellValue('N' . $row, $p->status ?? '');
+                $sheet->setCellValue('B' . $row, $p->no_pendaftaran ?? '-');
+                $sheet->setCellValue('C' . $row, $p->dataSiswa->nik ?? '-');
+                $sheet->setCellValue('D' . $row, $p->dataSiswa->nisn ?? '-');
+                $sheet->setCellValue('E' . $row, $p->dataSiswa->nama ?? '-');
+                $sheet->setCellValue('F' . $row, $p->dataSiswa->jenis_kelamin ?? '-');
+                $sheet->setCellValue('G' . $row, $p->dataSiswa->tempat_lahir ?? '-');
+                $sheet->setCellValue('H' . $row, $p->dataSiswa->tanggal_lahir ? \Carbon\Carbon::parse($p->dataSiswa->tanggal_lahir)->format('d/m/Y') : '-');
+                $sheet->setCellValue('I' . $row, $p->dataSiswa->alamat ?? '-');
+                $sheet->setCellValue('J' . $row, $p->dataSiswa->no_hp ?? '-');
+                $sheet->setCellValue('K' . $row, $p->email ?? '-');
+                $sheet->setCellValue('L' . $row, $p->jurusan->nama ?? '-');
+                $sheet->setCellValue('M' . $row, $p->gelombang->nama ?? '-');
+                $sheet->setCellValue('N' . $row, $p->status ?? '-');
                 $sheet->setCellValue('O' . $row, $p->created_at->format('d/m/Y H:i'));
                 $row++;
             }
@@ -116,17 +120,17 @@ class ReportController extends Controller
             $writer = new Xlsx($spreadsheet);
             $filename = 'Data_Pendaftar_PPDB_' . date('Y-m-d_H-i-s') . '.xlsx';
             
-            // Set headers for download
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="' . $filename . '"');
-            header('Cache-Control: max-age=0');
-            
-            // Save to output
-            $writer->save('php://output');
-            exit;
+            // Use Laravel response for proper download
+            return response()->streamDownload(function() use ($writer) {
+                $writer->save('php://output');
+            }, $filename, [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Cache-Control' => 'max-age=0',
+            ]);
             
         } catch (\Exception $e) {
             \Log::error('Export Excel Error: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
             return redirect()->back()->with('error', 'Gagal export data: ' . $e->getMessage());
         }
     }
