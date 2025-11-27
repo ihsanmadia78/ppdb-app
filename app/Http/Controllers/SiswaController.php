@@ -89,7 +89,7 @@ class SiswaController extends Controller
         return view('siswa.biodata', compact('pendaftar'));
     }
 
-    public function cetakKartu()
+    public function cetakKartu(Request $request)
     {
         try {
             $user = Auth::user();
@@ -108,8 +108,20 @@ class SiswaController extends Controller
 
             $pdf = \PDF::loadView('siswa.kartu-peserta', compact('pendaftar'));
             $pdf->setPaper('A4', 'portrait');
-            return $pdf->download('kartu-peserta-' . $pendaftar->no_pendaftaran . '.pdf');
+            $pdf->setOption('isHtml5ParserEnabled', true);
+            $pdf->setOption('isRemoteEnabled', true);
+            
+            $filename = 'Kartu_Peserta_' . $pendaftar->no_pendaftaran . '.pdf';
+            
+            // Check if user wants to stream (view in browser) or download
+            if ($request->get('action') === 'stream') {
+                return $pdf->stream($filename);
+            }
+            
+            return $pdf->download($filename);
         } catch (\Exception $e) {
+            \Log::error('Error cetakKartu: ' . $e->getMessage());
+            \Log::error('Stack trace: ' . $e->getTraceAsString());
             return redirect()->back()->with('error', 'Gagal mencetak kartu: ' . $e->getMessage());
         }
     }
